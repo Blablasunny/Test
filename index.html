@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' file: 'wasm-unsafe-eval'; style-src 'sha256-iBzNwN5wicIp6sHFsqu17sbjB2f84JjXGDySOuZNhP0='; connect-src 'none'; img-src data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Тест</title>
+<style>:root{font-family:Segoe UI,Arial,sans-serif;color:#172030;background:#f4f6fa;font-synthesis:none;--blue:#0055bb;--border:#dce2ec;--muted:#5c6678}
+*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:default;opacity:.55}[hidden]{display:none!important}
+.shell{max-width:900px;margin:0 auto;padding:28px 24px 48px}.brand{display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:13px;color:var(--muted);margin-bottom:26px}.brand strong{color:var(--blue);font-size:15px}
+h1{font-size:24px;line-height:1.28;letter-spacing:-.35px;max-width:760px;margin:0 0 24px;font-weight:650}.subtitle{color:var(--muted);margin:0 0 26px;font-size:16px}.panel{background:#fff;border:1px solid var(--border);border-radius:14px;padding:30px}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:24px}.fact strong{display:block;font-size:24px;font-weight:650}.fact span{display:block;color:var(--muted);font-size:13px;margin-top:4px}
+.intro{font-size:15px;line-height:1.55;margin:0 0 22px;color:#3a4557}.fields{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:20px}.field{display:flex;flex-direction:column;gap:8px;font-size:14px;font-weight:600}input[type=text]{width:100%;border:1px solid #bcc7d8;border-radius:7px;padding:12px 13px;min-height:46px;font-weight:400;background:#fff;color:#172030}input:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid #8ebcff;outline-offset:3px}
+.primary,.secondary,.quiet{border:1px solid transparent;border-radius:7px;padding:11px 18px;min-height:44px;font-weight:600}.primary{background:var(--blue);color:#fff}.primary:hover:not(:disabled){background:#00469d}.secondary{background:#fff;border-color:#bec9d9;color:#263247}.secondary:hover:not(:disabled){background:#f2f6fc}.quiet{background:transparent;color:#4e5c72}.quiet:hover:not(:disabled){background:#edf1f7}
+.note{font-size:13px;color:var(--muted);margin:15px 0 0;line-height:1.45}.alert{background:#fff0ee;border:1px solid #edb5af;border-radius:8px;padding:13px 16px;color:#8e2823;font-size:14px;line-height:1.5;margin:0 0 18px}.session-bar{position:sticky;top:0;background:#f4f6fa;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:14px 0 16px;gap:14px}.session-meta{font-size:14px;color:var(--muted)}.timer{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--muted)}.timer strong{font-size:26px;line-height:1;font-variant-numeric:tabular-nums;color:#172030;min-width:82px;text-align:right}.timer.urgent strong{color:#b02f29}
+.question-meta{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:14px;margin-bottom:20px}.points{color:var(--blue);font-weight:600}.question{border:0;padding:0;margin:0;min-width:0}.question legend{display:block;width:100%;padding:0;margin:0 0 24px;font-size:19px;line-height:1.55;font-weight:600}.question legend:focus{outline:0}
+.options{display:grid;gap:11px}.option{display:flex;align-items:flex-start;gap:12px;padding:15px 16px;border:1px solid var(--border);border-radius:8px;cursor:pointer;line-height:1.5;font-size:16px}.option:hover{border-color:#9bb9e4;background:#f9fbff}.option.selected{border-color:var(--blue);background:#eef5ff}.option input{margin:5px 0 0;accent-color:var(--blue);flex:none;width:16px;height:16px}.letter{color:var(--muted);min-width:20px}.option-text{min-width:0}
+.question-actions{display:flex;justify-content:space-between;gap:12px;margin-top:26px}.navigation{margin-top:22px}.nav-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px;color:var(--muted);font-size:13px}.numbers{display:grid;grid-template-columns:repeat(16,minmax(0,1fr));gap:6px}.number{border:1px solid #c9d3e2;color:#344057;background:#fff;border-radius:5px;padding:8px 0;min-height:36px;font-size:13px;font-variant-numeric:tabular-nums}.number.done{background:#e3edfb;border-color:#c2d5f0;color:#004caa}.number.current{border:2px solid var(--blue);padding:7px 0;color:var(--blue);font-weight:700}.finish-row{display:flex;justify-content:flex-end;margin-top:24px}
+[data-screen=active] h1{font-size:20px;letter-spacing:0}[data-screen=active] .subtitle{font-size:14px;margin-bottom:0}[data-screen=active] .brand{margin-bottom:18px}.result{text-align:center;padding:42px 30px}.result h2{font-size:22px;margin:0 0 12px}.result-person{color:var(--muted);font-size:15px;margin:0 0 28px;overflow-wrap:anywhere}.score{display:flex;justify-content:center;align-items:baseline;gap:8px;margin:0 0 10px}.score strong{font-size:64px;line-height:1.1;font-weight:650;letter-spacing:-2px}.score span{font-size:23px;color:var(--muted)}.status{font-size:20px;color:#19673d;font-weight:600;margin:0 0 16px}.status.fail{color:#a2312c}.result-reason{font-size:14px;color:var(--muted);margin:0 0 28px}.result .primary{margin-top:4px}
+dialog{max-width:440px;width:calc(100% - 40px);border:1px solid var(--border);padding:28px;border-radius:12px;color:#172030}dialog::backdrop{background:#1220396b}dialog h2{font-size:21px;margin:0 0 12px}dialog p{color:var(--muted);line-height:1.5;margin:0 0 24px}.dialog-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:10px}
+@media(max-width:600px){.shell{padding:20px 15px 32px}.brand{margin-bottom:22px}h1{font-size:23px}.panel{padding:22px 18px}.fields{grid-template-columns:1fr;gap:16px}.facts{grid-template-columns:repeat(2,1fr);gap:22px 16px}.fact strong{font-size:22px}.numbers{grid-template-columns:repeat(8,minmax(0,1fr))}.question legend{font-size:17px;line-height:1.55}.option{padding:13px 12px;gap:8px;font-size:15px}.timer{gap:8px}.timer strong{font-size:24px;min-width:74px}.session-meta{font-size:12px;max-width:155px}.result{padding:32px 20px}.score strong{font-size:56px}.question-actions button{padding:10px 14px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+@media print{body{background:#fff}.shell{padding:0;max-width:none}.brand{margin-top:0}.result{border:0}.result button,.alert{display:none}}</style>
+</head>
+<body data-screen="start">
+<main class="shell">
+  <h1>Тест</h1>
+  <p id="alert" class="alert" role="alert" hidden></p>
+  <noscript><p class="alert">Для прохождения теста включите JavaScript в браузере.</p></noscript>
+  <section id="start" class="panel" aria-label="Начало теста">
+    <div class="facts">
+      <div class="fact"><strong>27</strong><span>вопросов</span></div>
+      <div class="fact"><strong id="minutes">60</strong><span>минут</span></div>
+      <div class="fact"><strong>40</strong><span>баллов максимум</span></div>
+      <div class="fact"><strong>24</strong><span>проходной балл</span></div>
+    </div>
+    <p class="intro">В каждом вопросе один правильный ответ. Вопрос оценивается в 1 или 2 балла. Можно пользоваться черновиком и простым калькулятором.</p>
+    <form id="start-form">
+      <div class="fields">
+        <label class="field">ФИО<input id="student" type="text" maxlength="100" minlength="3" autocomplete="name" required></label>
+        <label class="field">Группа<input id="group" type="text" maxlength="40" autocomplete="off" required></label>
+      </div>
+      <button id="start-button" class="primary" type="submit" disabled>Начать тест</button>
+    </form>
+    <p class="note">После запуска таймер не останавливается.</p>
+  </section>
+  <section id="exam" hidden aria-label="Тест">
+    <div class="session-bar">
+      <span id="session-person" class="session-meta"></span>
+      <div id="timer-box" class="timer"><span>Осталось</span><strong id="timer" role="timer" aria-label="Оставшееся время">60:00</strong></div>
+    </div>
+    <div class="panel">
+      <div class="question-meta"><span id="question-counter"></span><span id="points" class="points"></span></div>
+      <fieldset class="question">
+        <legend id="stem" tabindex="-1"></legend>
+        <div id="options" class="options"></div>
+      </fieldset>
+      <div class="question-actions"><button id="previous" class="secondary" type="button">Назад</button><button id="next" class="secondary" type="button">Далее</button></div>
+    </div>
+    <nav class="navigation" aria-label="Переход к вопросу">
+      <div class="nav-head"><span>Вопросы</span><span id="answered" aria-live="polite"></span></div>
+      <div id="numbers" class="numbers"></div>
+    </nav>
+    <div class="finish-row"><button id="finish-button" class="quiet" type="button">Завершить тест</button></div>
+  </section>
+  <section id="result" class="panel result" hidden aria-labelledby="result-heading">
+    <h2 id="result-heading" tabindex="-1">Результат</h2>
+    <p id="result-person" class="result-person"></p>
+    <div class="score"><strong id="score"></strong><span>из 40</span></div>
+    <p id="result-status" class="status"></p>
+    <p id="result-reason" class="result-reason"></p>
+    <button id="save-result" class="primary" type="button">Сохранить результат</button>
+  </section>
+</main>
+<dialog id="confirm-finish" aria-labelledby="confirm-title">
+  <h2 id="confirm-title">Завершить тест?</h2>
+  <p id="confirm-text"></p>
+  <div class="dialog-actions"><button id="continue-button" class="secondary" type="button">Продолжить</button><button id="confirm-button" class="primary" type="button">Завершить</button></div>
+</dialog>
+<script src="test.js" defer></script>
+</body>
+</html>
